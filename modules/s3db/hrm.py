@@ -35,10 +35,7 @@ __all__ = ("HRModel",
            "HRContractModel",
            "HRSkillModel",
            "HRTagModel",
-           "HREventStrategyModel",
            "HREventProgrammeModel",
-           "HREventProjectModel",
-           "HREventAssessmentModel",
            "HRAppraisalModel",
            "HRExperienceModel",
            "HRAwardModel",
@@ -4198,35 +4195,6 @@ def hrm_training_onaccept(form):
                 hrm_certification_onaccept(form)
 
 # =============================================================================
-class HREventStrategyModel(S3Model):
-    """
-        (Training) Events <> Strategies Link Table
-    """
-
-    names = ("hrm_event_strategy",
-             )
-
-    def model(self):
-
-        # =====================================================================
-        # (Training) Events <> Strategies Link Table
-        #
-        tablename = "hrm_event_strategy"
-        self.define_table(tablename,
-                          self.hrm_training_event_id(empty = False,
-                                                     ondelete = "CASCADE",
-                                                     ),
-                          self.project_strategy_id(empty = False,
-                                                   ondelete = "CASCADE",
-                                                   ),
-                          *s3_meta_fields())
-
-        # ---------------------------------------------------------------------
-        # Pass names back to global scope (s3.*)
-        #
-        return {}
-
-# =============================================================================
 class HREventProgrammeModel(S3Model):
     """
         (Training) Events <> Programmes Link Table
@@ -4248,82 +4216,6 @@ class HREventProgrammeModel(S3Model):
                           self.hrm_programme_id(empty = False,
                                                 ondelete = "CASCADE",
                                                 ),
-                          *s3_meta_fields())
-
-        # ---------------------------------------------------------------------
-        # Pass names back to global scope (s3.*)
-        #
-        return {}
-
-# =============================================================================
-class HREventProjectModel(S3Model):
-    """
-        (Training) Events <> Projects Link Table
-    """
-
-    names = ("hrm_event_project",
-             )
-
-    def model(self):
-
-        # =====================================================================
-        # (Training) Events <> Projects Link Table
-        #
-        tablename = "hrm_event_project"
-        self.define_table(tablename,
-                          self.hrm_training_event_id(empty = False,
-                                                     ondelete = "CASCADE",
-                                                     ),
-                          self.project_project_id(empty = False,
-                                                  ondelete = "CASCADE",
-                                                  ),
-                          *s3_meta_fields())
-
-        # ---------------------------------------------------------------------
-        # Pass names back to global scope (s3.*)
-        #
-        return {}
-
-# =============================================================================
-class HREventAssessmentModel(S3Model):
-    """
-        (Training) Events <> Data Collection Assessments Link Table
-         Can be used for:
-            * Needs Assessment / Readiness checklist
-            * Tests (either for checking learning/application or for final grade)
-            * Evaluation (currently the only use case - for IFRC's Bangkok CCST)
-    """
-
-    names = ("hrm_event_target",
-             )
-
-    def model(self):
-
-        T = current.T
-
-        # @ToDo: Deployment_setting if use expanded beyond Bangkok CCST
-        type_opts = {1: T("Other"),
-                     3: T("3-month post-event Evaluation"),
-                     12: T("12-month post-event Evaluation"),
-                     }
-
-        # =====================================================================
-        # (Training) Events <> DC Targets Link Table
-        #
-        tablename = "hrm_event_target"
-        self.define_table(tablename,
-                          self.hrm_training_event_id(empty = False,
-                                                     ondelete = "CASCADE",
-                                                     ),
-                          self.dc_target_id(empty = False,
-                                            ondelete = "CASCADE",
-                                            ),
-                          Field("survey_type",
-                                default = 1,
-                                label = T("Type"),
-                                requires = IS_EMPTY_OR(IS_IN_SET(type_opts)),
-                                represent = S3Represent(options = type_opts),
-                                ),
                           *s3_meta_fields())
 
         # ---------------------------------------------------------------------

@@ -1225,7 +1225,7 @@ class ParsingModel(S3Model):
                            label = T("Keyword"),
                            ),
                      # @ToDo: Move this to a link table
-                     self.event_incident_type_id(),
+                     #self.event_incident_type_id(),
                      *s3_meta_fields())
 
         # ---------------------------------------------------------------------

@@ -186,31 +186,16 @@ class PersonEntityModel(S3Model):
         # Person Super-Entity
         #
         settings = current.deployment_settings
-        if settings.get_ui_label_camp():
-            SHELTER = T("Camp")
-        else:
-            SHELTER = T("Shelter")
         org_group_label = settings.get_org_groups()
         if org_group_label:
             org_group_label = T(org_group_label)
         else:
             org_group_label = T("Organization group")
-        pe_types = Storage(cr_shelter = SHELTER,
-                           deploy_alert = T("Deployment Alert"),
-                           dvi_body = T("Body"),
-                           dvi_morgue = T("Morgue"),
-                           #event_alert = T("Alert"),
-                           fire_station = T("Fire Station"),
-                           hms_hospital = T("Hospital"),
-                           hrm_training_event = T("Training Event"),
-                           inv_warehouse = T("Warehouse"),
+        pe_types = Storage(hrm_training_event = T("Training Event"),
                            org_organisation = messages.ORGANISATION,
                            org_group = org_group_label,
                            org_facility = T("Facility"),
                            org_office = T("Office"),
-                           #po_area = T("Recovery Outreach Area"),
-                           po_household = T("Household"),
-                           police_station = T("Police Station"),
                            pr_person = T("Person"),
                            pr_forum = T("Forum"),
                            pr_group = T("Person Group"),

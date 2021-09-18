@@ -214,20 +214,9 @@ Thank you"""
             shelter = T("Camp")
         else:
             shelter = T("Shelter")
-        self.org_site_types = Storage(transport_airport = T("Airport"),
-                                      transport_bridge = T("Bridge"),
-                                      msg_basestation = T("Cell Tower"),
-                                      cr_shelter = shelter,
+        self.org_site_types = Storage(msg_basestation = T("Cell Tower"),
                                       org_facility = T("Facility"), # @ToDo: Use deployment setting for label
                                       org_office = T("Office"),
-                                      transport_heliport = T("Heliport"),
-                                      hms_hospital = T("Hospital"),
-                                      fire_station = T("Fire Station"),
-                                      dvi_morgue = T("Morgue"),
-                                      police_station = T("Police Station"),
-                                      edu_school = T("School"),
-                                      transport_seaport = T("Seaport"),
-                                      inv_warehouse = T("Warehouse"),
                                       )
 
         # Name prefixes of tables which must not be manipulated from remote,

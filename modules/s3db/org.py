@@ -484,8 +484,6 @@ class OrganisationModel(S3Model):
                        org_facility = "organisation_id",
                        # Offices
                        org_office = "organisation_id",
-                       # Warehouses
-                       inv_warehouse = "organisation_id",
                        # Staff/Volunteers
                        hrm_delegation = "organisation_id",
                        hrm_human_resource = "organisation_id",
@@ -513,8 +511,6 @@ class OrganisationModel(S3Model):
                                                 },
                        # Format for filter_widget
                        org_organisation_organisation_type = "organisation_id",
-                       # Catalogs
-                       supply_catalog = "organisation_id",
                        # Regions
                        org_organisation_region = "organisation_id",
                        # Resources
@@ -554,17 +550,6 @@ class OrganisationModel(S3Model):
                                                ),
                        # Format for filter_widget
                        org_service_organisation = "organisation_id",
-                       # Assets
-                       asset_asset = "organisation_id",
-                       # Needs
-                       req_need = {"name": "needs",
-                                   "link": "req_need_organisation",
-                                   "joinby": "organisation_id",
-                                   "key": "need_id",
-                                   "multiple": False,
-                                   },
-                       # Requests
-                       #req_req = "donated_by_id",
 
                        # Enable this to allow migration of users between instances
                        #auth_user = "organisation_id",
@@ -608,65 +593,7 @@ class OrganisationModel(S3Model):
                                             },
                                            ),
 
-                       # Population Outreach (referral agencies)
-                       po_area = {"link": "po_organisation_area",
-                                  "joinby": "organisation_id",
-                                  "key": "area_id",
-                                  },
-                       po_organisation_area = "organisation_id",
-                       po_organisation_household = "organisation_id",
-                       po_referral_organisation = "organisation_id",
                        )
-
-        # Beneficiary/Case Management
-        if settings.has_module("br"):
-            # Use BR for org-specific categories in case management
-            add_components(tablename,
-                           br_need = "organisation_id",
-                           br_assistance_theme = "organisation_id",
-                           )
-        else:
-            # Use DVR for org-specific categories in case management
-            add_components(tablename,
-                           dvr_need = "organisation_id",
-                           dvr_response_theme = "organisation_id",
-                           )
-
-        # Projects
-        if settings.get_project_multiple_organisations():
-            # Use link table
-            add_components(tablename,
-                           project_project = {"link": "project_organisation",
-                                              "joinby": "organisation_id",
-                                              "key": "project_id",
-                                              # Embed widget doesn't currently
-                                              # support 2 fields of same name (8 hours)
-                                              #"actuate": "embed",
-                                              "actuate": "hide",
-                                              "autocomplete": "name",
-                                              "autodelete": False,
-                                              },
-                            # Format for filter_widget
-                            project_organisation = {"name": "project_organisation",
-                                                    "joinby": "organisation_id",
-                                                    },
-                            )
-
-        else:
-            # Direct link
-            add_components(tablename,
-                           project_project = "organisation_id",
-                           )
-
-        if settings.get_project_activities():
-            add_components(tablename,
-                           project_activity = {"link": "project_activity_organisation",
-                                               "joinby": "organisation_id",
-                                               "key": "activity_id",
-                                               "actuate": "replace",
-                                               "autodelete": False,
-                                               },
-                           )
 
         # ---------------------------------------------------------------------
         # Pass names back to global scope (s3.*)
